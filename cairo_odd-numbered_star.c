@@ -147,12 +147,12 @@ static gboolean time_handler(GtkWidget *widget);
 
 int
 gtk_setup ( int   argc,
-		    char *argv[] )
+            char *argv[] )
 {
         gtk_init(&argc, &argv);
 
         GtkWidget *
-			window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+            window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
         gtk_widget_add_events(window, GDK_BUTTON_PRESS_MASK);
 
@@ -176,12 +176,12 @@ gtk_setup ( int   argc,
 // TODO: Customize
 static gboolean
 on_expose_event ( GtkWidget      *widget,
-		          GdkEventExpose *event   UNUSED,
-		          gpointer        data    UNUSED )
+                  GdkEventExpose *event   UNUSED,
+                  gpointer        data    UNUSED )
 {
     // TODO: Seems we can't make this static; we get 'error: initializer element is not constant'
-	cairo_t *
-		cr = gdk_cairo_create(widget->window);
+    cairo_t *
+        cr = gdk_cairo_create(widget->window);
 
     // Set up coordinate system
     // TODO: Investigate whether we should keep the default coordinate system
@@ -225,18 +225,18 @@ on_expose_event ( GtkWidget      *widget,
     // Clean up Cairo
     cairo_destroy(cr);
 
-	return FALSE;
+    return FALSE;
 }
 
 UNUSED
 static gboolean
 time_handler ( GtkWidget *widget )
 {
-	if (widget->window == NULL)
-		return FALSE;
+    if (widget->window == NULL)
+        return FALSE;
 
-	gtk_widget_queue_draw(widget);
-	return TRUE;
+    gtk_widget_queue_draw(widget);
+    return TRUE;
 }
 
 // Create SVG file
