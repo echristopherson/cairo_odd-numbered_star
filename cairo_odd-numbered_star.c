@@ -52,7 +52,7 @@ draw_axes ( cairo_t *cr )
     cairo_stroke(cr);
 }
 
-Star *
+Star
 star_new ( cairo_t *cr,
            int num_points )
 {
@@ -77,29 +77,27 @@ star_new ( cairo_t *cr,
         );
     }
 
-    Star *
-        star = malloc(sizeof(Star));
     cairo_reference(cr);
-    *star = (Star){ cr, num_points, star_points };
-
-    return star;
+    Star
+        result = { cr, num_points, star_points };
+    return result;
 }
 
 void
-star_destroy ( Star *star )
+star_destroy ( Star star )
 {
-    free(star->points);
-    cairo_destroy(star->cr);
+    free(star.points);
+    cairo_destroy(star.cr);
 }
 
 void
-star_draw ( Star *star )
+star_draw ( Star star )
 {
-    for (int i = 0; i < star->num_points; ++ i)
-        cairo_line_to(star->cr, star->points[i].x, star->points[i].y);
+    for (int i = 0; i < star.num_points; ++ i)
+        cairo_line_to(star.cr, star.points[i].x, star.points[i].y);
 
-    cairo_close_path(star->cr);
-    cairo_stroke(star->cr);
+    cairo_close_path(star.cr);
+    cairo_stroke(star.cr);
 }
 
 void
@@ -197,7 +195,7 @@ on_expose_event ( GtkWidget      *widget,
     //draw_axes(cr);
 
     // Create star points
-    Star *
+    Star
         star = star_new(cr, gNum_points);
 
     // Draw star
@@ -220,7 +218,6 @@ on_expose_event ( GtkWidget      *widget,
     cairo_stroke(cr);
 
     star_destroy(star);
-    star = NULL;
 
     // Clean up Cairo
     cairo_destroy(cr);
@@ -266,7 +263,7 @@ create_svg (int num_points)
     //draw_axes(cr);
 
     // Create star points
-    Star *
+    Star
         star = star_new(cr, num_points);
 
     // Draw star
@@ -288,8 +285,11 @@ create_svg (int num_points)
     cairo_close_path(cr);
     cairo_stroke(cr);
 
-    star_destroy(star);
-    star = NULL;
+    // TODO: cr is now held by the Star; we should probably reference it there
+    // and clean it up when we're done, and decide whether to also clean it up
+    // here.
+    // Clean up star
+    free(star.points);
 
     // Clean up Cairo
     cairo_destroy(cr);
