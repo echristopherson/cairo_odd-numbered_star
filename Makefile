@@ -4,7 +4,7 @@ DEBUG_FLAGS     = -g -O0
 CAIRO_FLAGS     = $(shell pkg-config --libs --cflags cairo)
 GTK_FLAGS       = $(shell pkg-config --libs --cflags gtk+-2.0)
 ADDL_LIB_FLAGS  = -lm -D_DEFAULT_SOURCE -D_GNU_SOURCE
-CFLAGS	       := $(CFLAGS) -Wall -Wextra -Werror
+CFLAGS	       := $(CFLAGS) -Wall -Wextra
 
 ifeq ($(origin NUM_POINTS), undefined)
 	NUM_POINTS_RUN_ARGS   =
