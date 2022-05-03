@@ -35,4 +35,4 @@ debug: $(BINARY)
 	gdb ./$< $(NUM_POINTS_ARGS)
 
 $(BINARY): $(PROJECT).c
-	$(CC) $(CFLAGS) $(DEBUG_FLAGS) $(CAIRO_FLAGS) $(GTK_FLAGS) $(ADDL_LIB_FLAGS) $^ -o $@
+	$(CC) $^ -o $@    $(CFLAGS) $(DEBUG_FLAGS) $(CAIRO_FLAGS) $(GTK_FLAGS) $(ADDL_LIB_FLAGS)
